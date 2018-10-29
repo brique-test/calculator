@@ -6,6 +6,10 @@ def validate(equation, x_value):
         print('Please type "x" in equation')
         return False
 
+    if '=' not in equation:
+        print('Please type equation, not expression')
+        return False
+
     try:
         int(x_value)
     except ValueError:
@@ -15,11 +19,7 @@ def validate(equation, x_value):
     return True
 
 
-def evaluate(equation, x_value):
-    if '=' not in equation:
-        replaced_eq = equation.replace('x', x_value)
-        return eval(replaced_eq)
-
+def evaluate_normal(equation, x_value):
     _, expression = equation.split('=')
     replaced_ex = expression.replace('x', x_value)
     return eval(replaced_ex)
@@ -38,7 +38,7 @@ def main():
         if is_validated is False:
             continue
 
-        answer = evaluate(equation, x_value)
+        answer = evaluate_normal(equation, x_value)
         print(f'y: {answer}')
         time.sleep(1)
 
