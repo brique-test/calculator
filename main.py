@@ -1,6 +1,6 @@
 import time
 
-from functions import validate, make_expression, select_notations, evaluate_infix
+from functions import validate, make_expression, evaluate_infix
 
 
 def main():
@@ -20,18 +20,21 @@ def main():
 
         # 방정식에 x값을 대입하고 우변만 쪼갠다
         expression = make_expression(equation, x_value)
+
         # 입력된 계산이 전위/중위/후위 표기인지 판단
-        notation = select_notations(expression)
+        # (오류를 발견해 기능을 숨깁니다)
+        # notation = select_notations(expression)
+        #
+        # # 판단된 표기법에 따라 계산 진행
+        # # (전위, 후위 표기법에 따른 계산은 해결하지 못함)
+        # if notation is 'prefix':
+        #     answer = 'prefix'
+        # elif notation is 'infix':
+        #     answer = evaluate_infix(expression)
+        # elif notation is 'postfix':
+        #     answer = 'postfix'
 
-        # 판단된 표기법에 따라 계산 진행
-        # (전위, 후위 표기법에 따른 계산은 해결하지 못함)
-        if notation is 'prefix':
-            answer = 'prefix'
-        elif notation is 'infix':
-            answer = evaluate_infix(expression)
-        elif notation is 'postfix':
-            answer = 'postfix'
-
+        answer = evaluate_infix(expression)
         # 해답 출력 및 1초간 휴식 후 루프 재개
         print(f'y: {answer}')
         time.sleep(1)
