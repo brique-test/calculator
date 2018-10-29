@@ -21,20 +21,34 @@ def validate(equation, x_value):
     return True
 
 
-def make_deque(equation):
+def replace_to_x_value(equation, x_value):
+    return equation.replace('x', x_value)
+
+
+def split_expression(equation):
     _, expression = equation.split('=')
+    return expression
+
+
+def make_expression(equation, x_value):
+    replaced_eq = replace_to_x_value(equation, x_value)
+    return split_expression(replaced_eq)
+
+
+def make_deque(expression):
     strip_ex = expression.replace(' ', '')
     return deque(chain(strip_ex))
 
 
-def select_notations(collection):
+def select_notations(expression):
+    deque_eq = make_deque(expression)
     brackets = ('(', ')')
     operators = ('+', '-', '*', '/')
     operator_count = 0
     num_count = 0
 
     while True:
-        token = collection.popleft()
+        token = deque_eq.popleft()
         if token in brackets:
             continue
 
@@ -55,10 +69,16 @@ def select_notations(collection):
                 return 'prefix'
 
 
-def evaluate_infix(equation, x_value):
-    _, expression = equation.split('=')
-    replaced_ex = expression.replace('x', x_value)
-    return eval(replaced_ex)
+def evaluate_prefix(expression):
+    pass
+
+
+def evaluate_infix(expression):
+    return eval(expression)
+
+
+def evaluate_postfix(expression):
+    pass
 
 
 def main():
@@ -74,18 +94,16 @@ def main():
         if is_validated is False:
             continue
 
-        deque_eq = make_deque(equation)
-
-        notation = select_notations(deque_eq)
+        expression = make_expression(equation, x_value)
+        notation = select_notations(expression)
 
         if notation is 'prefix':
-            pass
+            answer = 'prefix'
         elif notation is 'infix':
-            pass
+            answer = evaluate_infix(expression)
         elif notation is 'postfix':
-            pass
+            answer = 'postfix'
 
-        answer = evaluate_infix(equation, x_value)
         print(f'y: {answer}')
         time.sleep(1)
 
